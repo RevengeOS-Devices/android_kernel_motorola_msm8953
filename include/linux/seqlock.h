@@ -37,7 +37,7 @@
 #include <linux/lockdep.h>
 #include <asm/processor.h>
 #include <asm/relaxed.h>
-
+#include <asm-generic/processor.h>
 /*
  * Version using sequence counter only.
  * This can be used when code has its own mutex protecting the
