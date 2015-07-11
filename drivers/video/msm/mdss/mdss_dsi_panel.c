@@ -38,6 +38,8 @@
 
 #define MDSS_PANEL_DEFAULT_VER 0xffffffffffffffff
 #define MDSS_PANEL_UNKNOWN_NAME "unknown"
+#include "mdss_livedisplay.h"
+
 #define DT_CMD_HDR 6
 #define MIN_REFRESH_RATE 48
 #define DEFAULT_MDP_TRANSFER_TIME 14000
@@ -1138,6 +1140,10 @@ static int mdss_dsi_panel_on(struct mdss_panel_data *pdata)
 
 	panel_notify(PANEL_EVENT_DISPLAY_ON, pinfo);
 
+	if (pdata->event_handler)
+		pdata->event_handler(pdata, MDSS_EVENT_UPDATE_LIVEDISPLAY,
+				(void *)(unsigned long) MODE_UPDATE_ALL);
+
 end:
 	if (pinfo->forced_tx_mode_ftr_enabled)
 		mdss_dsi_panel_forced_tx_mode_set(pinfo, true);
@@ -1318,7 +1324,7 @@ static void mdss_dsi_parse_trigger(struct device_node *np, char *trigger,
 }
 
 
-static int mdss_dsi_parse_dcs_cmds(struct device_node *np,
+int mdss_dsi_parse_dcs_cmds(struct device_node *np,
 		struct dsi_panel_cmds *pcmds, char *cmd_key, char *link_key)
 {
 	const char *data;
@@ -3285,7 +3291,7 @@ static int mdss_panel_parse_dt(struct device_node *np,
 	rc = mdss_panel_parse_dt_hdmi(np, ctrl_pdata);
 	if (rc)
 		goto error;
-
+        mdss_livedisplay_parse_dt(np, pinfo);
 	mdss_dsi_parse_dcs_cmds(np, &ctrl_pdata->lp_on_cmds,
 		"qcom,mdss-dsi-lp-mode-on", NULL);
 
