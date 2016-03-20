@@ -1103,6 +1103,7 @@ config BOOTINFO
 	  from both kernel context (via function call) and user
 	  context (via /proc/bootinfo).
 
+
 config MMI_UNIT_INFO
 	default n
 	bool "Motorola Mobility Unit Info"
@@ -1126,5 +1127,11 @@ config MMI_STORAGE_INFO
 	bool "Motorola Mobility STORAGE Info"
 	help
 	Provide mechanism to export EMMC/UFS type, size and vendor info.
+
+config STATE_NOTIFIER
+        bool "State Notifier"
+
+source "drivers/soc/qcom/memshare/Kconfig"
+
 
 endif # ARCH_MSM
