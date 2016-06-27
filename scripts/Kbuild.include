@@ -7,6 +7,7 @@ quote   := "
 squote  := '
 empty   :=
 space   := $(empty) $(empty)
+tab     := $(empty)	$(empty)
 
 ###
 # Name of target with a '.' as filename prefix. foo/bar.o => foo/.bar.o
@@ -82,11 +83,35 @@ cc-cross-prefix =  \
 # output directory for tests below
 TMPOUT := $(if $(KBUILD_EXTMOD),$(firstword $(KBUILD_EXTMOD))/)
 
+KBUILD_SHELLCACHE := .shellcache
+
+ifeq ($(KBUILD_SHELLCACHE),)
+cached-shell = $(shell $(1))
+else
+-include $(KBUILD_SHELLCACHE)
+
+sanitize = $(subst $(space),_,	\
+	      $(subst $(tab),_,	\
+	      $(subst \n,_,	\
+	      $(subst :,_,	\
+	      $(subst \#,_,	\
+	      $(subst =,_,	\
+	      $(subst $$,_,	\
+	      $(subst ',_,	\
+	      $(subst ",_,	\
+	      $(1))))))))))
+
+cached-shell = $(if $(cmd$(call sanitize,$(1))),$(subst CACHED,,$(cmd$(call sanitize,$(1)))),$(shell \
+	res='$(shell $(1))';					\
+	echo "$$res";						\
+	echo 'cmd$(call sanitize,$(1)) = CACHED'"$$res" >> $(KBUILD_SHELLCACHE)))
+endif
+
 # try-run
 # Usage: option = $(call try-run, $(CC)...-o "$$TMP",option-ok,otherwise)
 # Exit code chooses option. "$$TMP" is can be used as temporary file and
 # is automatically cleaned up.
-try-run = $(shell set -e;		\
+try-run = $(call cached-shell,set -e;	\
 	TMP="$(TMPOUT).$$$$.tmp";	\
 	TMPO="$(TMPOUT).$$$$.o";	\
 	if ($(1)) >/dev/null 2>&1;	\
@@ -130,20 +155,20 @@ cc-disable-warning = $(call try-run,\
 
 # cc-name
 # Expands to either gcc or clang
-cc-name = $(shell $(CC) -v 2>&1 | grep -q "clang version" && echo clang || echo gcc)
+cc-name = $(call cached-shell,$(CC) -v 2>&1 | grep -q "clang version" && echo clang || echo gcc)
 
 # cc-version
 # Usage gcc-ver := $(call cc-version)
-cc-version = $(shell $(CONFIG_SHELL) $(srctree)/scripts/gcc-version.sh $(CC))
+cc-version = $(call cached-shell,$(CONFIG_SHELL) $(srctree)/scripts/gcc-version.sh $(CC))
 
 # cc-fullversion
 # Usage gcc-ver := $(call cc-fullversion)
-cc-fullversion = $(shell $(CONFIG_SHELL) \
+cc-fullversion = $(call cached-shell,$(CONFIG_SHELL) \
 	$(srctree)/scripts/gcc-version.sh -p $(CC))
 
 # cc-ifversion
 # Usage:  EXTRA_CFLAGS += $(call cc-ifversion, -lt, 0402, -O1)
-cc-ifversion = $(shell [ $(call cc-version, $(CC)) $(1) $(2) ] && echo $(3))
+cc-ifversion = $(call cached-shell,[ $(call cc-version, $(CC)) $(1) $(2) ] && echo $(3))
 
 # cc-ldoption
 # Usage: ldflags += $(call cc-ldoption, -Wl$(comma)--hash-style=both)
@@ -164,11 +189,11 @@ ar-option = $(call try-run, $(AR) rc$(1) "$$TMP",$(1),$(2))
 # ld-version
 # Usage: $(call ld-version)
 # Note this is mainly for HJ Lu's 3 number binutil versions
-ld-version = $(shell $(LD) --version | $(srctree)/scripts/ld-version.sh)
+ld-version = $(call cached-shell,$(LD) --version | $(srctree)/scripts/ld-version.sh)
 
 # ld-ifversion
 # Usage:  $(call ld-ifversion, -ge, 22252, y)
-ld-ifversion = $(shell [ $(call ld-version) $(1) $(2) ] && echo $(3))
+ld-ifversion = $(call cached-shell,[ $(call ld-version) $(1) $(2) ] && echo $(3))
 
 ######
 
