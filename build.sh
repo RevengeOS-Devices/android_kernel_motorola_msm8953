@@ -27,7 +27,7 @@ echo "**** Setting Toolchain ****"
 export CROSS_COMPILE=$KERNEL_TOOLCHAIN
 export ARCH=arm64
 export SUBARCH=arm64
-export KBUILD_COMPILER_STRING="Clang Version 8.0.7 boiis"
+export KBUILD_COMPILER_STRING="Clang Version 9.0.35 boiis"
 
 # Clean build always lol
 echo "**** Cleaning ****"
@@ -65,7 +65,7 @@ cp $KERNEL_DIR/out/arch/arm64/boot/dtb $ANY_KERNEL2_DIR/
 echo "**** Time to zip up! ****"
 cd $ANY_KERNEL2_DIR/
 zip -r9 $FINAL_KERNEL_ZIP * -x README $FINAL_KERNEL_ZIP
-cp $KERNEL_DIR/AnyKernel2/$FINAL_KERNEL_ZIP $PWD/$FINAL_KERNEL_ZIP
+cp $KERNEL_DIR/AnyKernel2/$FINAL_KERNEL_ZIP /home/revenger/cunt//$FINAL_KERNEL_ZIP
 
 scp $FINAL_KERNEL_ZIP utsavthecunt@frs.sourceforge.net:/home/frs/project/unofficialbuilds/test
 
