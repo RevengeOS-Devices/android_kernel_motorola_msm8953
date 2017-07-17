@@ -456,7 +456,7 @@ static int set_device_mode(struct lpm_cluster *cluster, int ndevice,
 static int cpu_power_select(struct cpuidle_device *dev,
 		struct lpm_cpu *cpu)
 {
-	int best_level = -1;
+	int best_level = 0;
 	uint32_t latency_us = pm_qos_request_for_cpu(PM_QOS_CPU_DMA_LATENCY,
 							dev->cpu);
 	s64 sleep_us = ktime_to_us(tick_nohz_get_sleep_length());
@@ -1016,17 +1016,11 @@ static int lpm_cpuidle_select(struct cpuidle_driver *drv,
 		struct cpuidle_device *dev)
 {
 	struct lpm_cluster *cluster = per_cpu(cpu_cluster, dev->cpu);
-	int idx;
 
 	if (!cluster)
 		return 0;
 
-	idx = cpu_power_select(dev, cluster->cpu);
-
-	if (idx < 0)
-		return -EPERM;
-
-	return idx;
+	return cpu_power_select(dev, cluster->cpu);
 }
 
 static int lpm_cpuidle_enter(struct cpuidle_device *dev,
@@ -1039,9 +1033,6 @@ static int lpm_cpuidle_enter(struct cpuidle_device *dev,
 	struct power_params *pwr_params;
 	struct clk *cpu_clk = per_cpu(cpu_clocks, dev->cpu);
 	struct lpm_cluster_level *level;
-
-	if (idx < 0)
-		return -EINVAL;
 
 	pwr_params = &cluster->cpu->levels[idx].pwr;
 
