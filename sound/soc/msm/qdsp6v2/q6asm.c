@@ -135,6 +135,7 @@ static int out_cold_index;
 static char *out_buffer;
 static char *in_buffer;
 
+
 static inline uint32_t q6asm_get_pcm_format_id(uint32_t media_format_block_ver)
 {
 	uint32_t pcm_format_id;
