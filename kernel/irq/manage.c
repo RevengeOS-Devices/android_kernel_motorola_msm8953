@@ -21,6 +21,15 @@
 
 #include "internals.h"
 
+struct irq_desc_list {
+	struct list_head list;
+	struct irq_desc *desc;
+} perf_crit_irqs = {
+	.list = LIST_HEAD_INIT(perf_crit_irqs.list)
+};
+
+static DEFINE_RAW_SPINLOCK(perf_irqs_lock);
+
 #ifdef CONFIG_IRQ_FORCED_THREADING
 __read_mostly bool force_irqthreads;
 
