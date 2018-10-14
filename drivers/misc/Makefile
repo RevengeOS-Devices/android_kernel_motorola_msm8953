@@ -97,5 +97,3 @@ obj-$(CONFIG_DTV_FC8300) += moto-dtv-fc8300/
 # TODO: remove me b/62058353
 subdir-ccflags-y += \
 	-Wno-ignored-attributes
-=======
->>>>>>> 6e4aa30... drivers: misc: remove duplicate entries.
