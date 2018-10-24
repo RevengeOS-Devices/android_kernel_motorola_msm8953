@@ -31,10 +31,10 @@ choice
 	 on SMP and NUMA systems. If you are going to be using NTSC video
 	 or multimedia, selected 300Hz instead.
 
-	config HZ_300
-		bool "300 HZ"
+	config HZ_500
+		bool "500 HZ"
 	help
-	 300 Hz is a good compromise choice allowing server performance
+	 500 Hz is a good compromise choice allowing server performance
 	 while also showing good interactive responsiveness even
 	 on SMP and NUMA systems and exactly dividing by both PAL and
 	 NTSC frame rates for video and multimedia work.
@@ -51,7 +51,7 @@ config HZ
 	int
 	default 100 if HZ_100
 	default 250 if HZ_250
-	default 300 if HZ_300
+	default 500 if HZ_500
 	default 1000 if HZ_1000
 
 config SCHED_HRTICK
