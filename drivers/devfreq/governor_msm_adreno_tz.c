@@ -380,7 +380,6 @@ extern int adreno_idler(struct devfreq_dev_status stats, struct devfreq *devfreq
 		 unsigned long *freq);
 #endif
 
-#if 1
 
 // mapping gpu level calculated linear conservation half curve values into a
 // bell curve of conservation  (lower is higher freq level)
