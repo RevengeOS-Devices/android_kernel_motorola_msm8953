@@ -6,13 +6,13 @@ DATE_POSTFIX=$(date +"%Y%m%d")
 
 ## Copy this script inside the kernel directory
 KERNEL_DIR=$PWD
-KERNEL_TOOLCHAIN=/home/nick/data/kernel/prebuilts/aarch64-linux-android-4.9/bin/aarch64-linux-android-
-CLANG_TOOLCHAIN=/home/nick/data/kernel/prebuilts/clang-r346389b/bin/clang-8
+KERNEL_TOOLCHAIN=/home/utsavbalar1231/liquid/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+CLANG_TOOLCHAIN=/home/utsavbalar1231/clang-8/bin/clang-9
 KERNEL_DEFCONFIG=potter_defconfig
 DTBTOOL=$KERNEL_DIR/Dtbtool/
-JOBS=28
+JOBS=8
 ANY_KERNEL2_DIR=$KERNEL_DIR/AnyKernel2/
-FINAL_KERNEL_ZIP=Optimus_Drunk_Potter-$DATE_POSTFIX-EAS.zip
+FINAL_KERNEL_ZIP=IMMENSITY~EAS_Recreated-$DATE_POSTFIX-byTheCunt.zip
 # Speed up build process
 MAKE="./makeparallel"
 
@@ -27,7 +27,7 @@ echo "**** Setting Toolchain ****"
 export CROSS_COMPILE=$KERNEL_TOOLCHAIN
 export ARCH=arm64
 export SUBARCH=arm64
-export KBUILD_COMPILER_STRING="Clang Version 8.0.6"
+export KBUILD_COMPILER_STRING="Clang Version 8.0.7 boiis"
 
 # Clean build always lol
 echo "**** Cleaning ****"
@@ -65,7 +65,7 @@ cp $KERNEL_DIR/out/arch/arm64/boot/dtb $ANY_KERNEL2_DIR/
 echo "**** Time to zip up! ****"
 cd $ANY_KERNEL2_DIR/
 zip -r9 $FINAL_KERNEL_ZIP * -x README $FINAL_KERNEL_ZIP
-cp $KERNEL_DIR/AnyKernel2/$FINAL_KERNEL_ZIP /home/nick/data/kernel/$FINAL_KERNEL_ZIP
+cp $KERNEL_DIR/AnyKernel2/$FINAL_KERNEL_ZIP /home/utsavbalar1231/$FINAL_KERNEL_ZIP
 
 echo "**** Good Bye!! ****"
 cd $KERNEL_DIR
