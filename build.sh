@@ -65,7 +65,9 @@ cp $KERNEL_DIR/out/arch/arm64/boot/dtb $ANY_KERNEL2_DIR/
 echo "**** Time to zip up! ****"
 cd $ANY_KERNEL2_DIR/
 zip -r9 $FINAL_KERNEL_ZIP * -x README $FINAL_KERNEL_ZIP
-cp $KERNEL_DIR/AnyKernel2/$FINAL_KERNEL_ZIP /home/revenger/$FINAL_KERNEL_ZIP
+cp $KERNEL_DIR/AnyKernel2/$FINAL_KERNEL_ZIP $PWD/$FINAL_KERNEL_ZIP
+
+scp $FINAL_KERNEL_ZIP utsavthecunt@frs.sourceforge.net:/home/frs/project/unofficialbuilds/test
 
 echo "**** Good Bye!! ****"
 cd $KERNEL_DIR
