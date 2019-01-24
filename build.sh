@@ -6,8 +6,8 @@ DATE_POSTFIX=$(date +"%Y%m%d")
 
 ## Copy this script inside the kernel directory
 KERNEL_DIR=$PWD
-KERNEL_TOOLCHAIN=/home/utsavbalar1231/liquid/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-
-CLANG_TOOLCHAIN=/home/utsavbalar1231/clang-8/bin/clang-9
+KERNEL_TOOLCHAIN=/home/revenger/ros/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+CLANG_TOOLCHAIN=/home/revenger/clang-8/bin/clang-9
 KERNEL_DEFCONFIG=potter_defconfig
 DTBTOOL=$KERNEL_DIR/Dtbtool/
 JOBS=8
@@ -65,7 +65,7 @@ cp $KERNEL_DIR/out/arch/arm64/boot/dtb $ANY_KERNEL2_DIR/
 echo "**** Time to zip up! ****"
 cd $ANY_KERNEL2_DIR/
 zip -r9 $FINAL_KERNEL_ZIP * -x README $FINAL_KERNEL_ZIP
-cp $KERNEL_DIR/AnyKernel2/$FINAL_KERNEL_ZIP /home/utsavbalar1231/$FINAL_KERNEL_ZIP
+cp $KERNEL_DIR/AnyKernel2/$FINAL_KERNEL_ZIP /home/revenger/$FINAL_KERNEL_ZIP
 
 echo "**** Good Bye!! ****"
 cd $KERNEL_DIR
