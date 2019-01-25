@@ -4,7 +4,7 @@
 ## AnyKernel setup
 # begin properties
 properties() {
-kernel.string=Optimus Drunk Kernel by GtrCraft
+kernel.string=//~IMMENSITY_EAS~//
 do.devicecheck=1
 do.modules=0
 do.cleanup=1
@@ -49,7 +49,7 @@ mount -o ro,remount -t auto /vendor 2>/dev/null;
 
 backup_file init.rc;
 
-insert_line init.rc "init.optimus.rc" after "import /init.usb.configfs.rc" "import /init.optimus.rc";
+insert_line init.rc "init.immensity.rc" after "import /init.usb.configfs.rc" "import /init.immensity.rc";
 
 # end ramdisk changes
 
