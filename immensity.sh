@@ -25,7 +25,7 @@ UPLOAD_DIR=$KERNEL_DIR
 DTBTOOL=$KERNEL_DIR/Dtbtool/
 # Export
 export ARCH=arm64
-export CROSS_COMPILE=~/ros/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+export CROSS_COMPILE=~/bliss/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-
 export KBUILD_BUILD_USER="Utsav"
 export KBUILD_BUILD_HOST="TheCunt"
 
