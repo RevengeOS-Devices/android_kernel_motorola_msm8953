@@ -19,7 +19,9 @@ TYPE=$NAME-Release
 FINAL_KERNEL_ZIP=$KERNEL-$TYPE-$DATE_POSTFIX.zip
 # Speed up build process
 MAKE="./makeparallel"
-
+cd $ZIP_DIR
+mkdir treble-unsupported
+cd $KERNEL_DIR
 BUILD_START=$(date +"%s")
 blue='\033[0;34m'
 cyan='\033[0;36m'
