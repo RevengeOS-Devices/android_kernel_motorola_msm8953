@@ -4,7 +4,7 @@
 ## AnyKernel setup
 # begin properties
 properties() {
-kernel.string=// CUNT•KERNEL //
+kernel.string=IMMENSITY - KERNEL by @UtsavTheCunt
 do.devicecheck=1
 do.modules=0
 do.cleanup=1
@@ -35,7 +35,7 @@ dump_boot;
 
 backup_file init.rc;
 
-insert_line init.rc "init.qcom.rc" after "import /init.usb.configfs.rc" "import /init.qcom.rc";
+insert_line init.rc "init.immensity.rc" after "import /init.usb.configfs.rc" "import /init.immensity.rc";
 
 # end ramdisk changes
 

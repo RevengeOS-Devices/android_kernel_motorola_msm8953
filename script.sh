@@ -6,17 +6,17 @@ DATE_POSTFIX=$(date +"%Y%m%d")
 
 ## Copy this script inside the kernel directory
 KERNEL_DIR=$PWD
-MPATH=/home/ubuntu/
-KERNEL_TOOLCHAIN=$MPATH/gcc/bin/aarch64-linux-android-
+MPATH=/home/debian/
+KERNEL_TOOLCHAIN=$MPATH/gcc7/bin/aarch64-linux-gnu-
 CLANG_TOOLCHAIN=$MPATH/clang/bin/clang-9
 KERNEL_DEFCONFIG=potter_defconfig
 DTB=$KERNEL_DIR/dtbtool/
 JOBS=16
 ZIP_DIR=$KERNEL_DIR/zip/
-KERNEL=CUNT-KERNEL
-NAME=Official-HMP-Slav
-TYPE=UniFied-$NAME-Release
-FINAL_KERNEL_ZIP=$KERNEL~$TYPE-$DATE_POSTFIX.zip
+KERNEL=IMMENSITY-KERNEL
+NAME=EnDLess
+TYPE=$NAME-Release
+FINAL_KERNEL_ZIP=$KERNEL-$TYPE-$DATE_POSTFIX.zip
 # Speed up build process
 MAKE="./makeparallel"
 
@@ -35,17 +35,20 @@ echo -e  "$P // Setting up Toolchain //"
 export CROSS_COMPILE=$KERNEL_TOOLCHAIN
 export ARCH=arm64
 export SUBARCH=arm64
-export KBUILD_COMPILER_STRING="DragonTC-9.0"
-export KBUILD_BUILD_USER=UtsavTheCunt
-export KBUILD_BUILD_HOST=Cunt~Machine
 
 
 echo -e "$R •••••••••••••••••••••"
-echo -e "$yellow        #  C  #"
-echo -e "$yellow        #  U  #"
-echo -e "$yellow        #  N  #"
+echo -e "$yellow        #  I  #"
+echo -e "$yellow        #  M  #"
+echo -e "$yellow        #  M  #"
+echo -e "$yellow        #  E  #"
+echo -e "$yellow 	#  N  #"
+echo -e "$yellow        #  S  #"
+echo -e "$yellow 	#  I  #"
 echo -e "$yellow        #  T  #"
-echo -e "$nocol        #  •  #"
+echo -e "$yellow 	#  Y  #"
+echo -e "$nocol        #  |  #"
+echo -e "$nocol        #  |  #"
 echo -e "$yellow        #  K  #"
 echo -e "$yellow        #  E  #"
 echo -e "$yellow        #  R  #"
@@ -62,7 +65,8 @@ echo -e "$blue***********************************************"
 echo -e "$R          BUILDING CUNT•KERNEL          "
 echo -e "***********************************************$nocol"
 make $KERNEL_DEFCONFIG O=out
-make -j$JOBS  CC=$CLANG_TOOLCHAIN CLANG_TRIPLE=aarch64-linux-android- O=out
+make -j$JOBS O=out
+# CC=$CLANG_TOOLCHAIN CLANG_TRIPLE=aarch64-linux-android- O=out
 
 echo -e "$blue***********************************************"
  echo " // Generating DT.img //"
@@ -99,10 +103,11 @@ cd $KERNEL_DIR
 echo -e "$R // Cleaning up //"
 
 rm -rf $ZIP_DIR/$FINAL_KERNEL_ZIP
-rm -rf zip/Image.gz
-rm -rf zip/dtb
+rm -rf $ZIP_DIR/Image.gz
+rm -rf $ZIP_DIR/dtb
+rm -rf $ZIP_DIR/treble-unsupported
 rm -rf $KERNEL_DIR/out/
 
 BUILD_END=$(date +"%s")
 DIFF=$(($BUILD_END - $BUILD_START))
-echo -e "$yellow CUNT•KERNEL Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds."
+echo -e "$yellow IMMENSITY • KERNEL Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds."

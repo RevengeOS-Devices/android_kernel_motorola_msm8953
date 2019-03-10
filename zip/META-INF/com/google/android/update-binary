@@ -80,14 +80,6 @@ if [ -f /tmp/anykernel/version ]; then
 fi;
 
 ui_print " ";
-ui_print " |  • CUNT - KERNEL •  | ";
-ui_print " |         EAS         | ";
-ui_print " |   By UtsavTheCunt   | ";
-ui_print " |       UniFied       | ";
-ui_print " |    Compiled with    | ";
-ui_print " |     DragonTC-9      | ";
-ui_print " | Enjoy Taste of Cunt | ";
-ui_print " ";
 
 unmount_all;
 mount -o ro -t auto /system;
@@ -113,18 +105,18 @@ if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.devicecheck)" == 1 ]; then
     abort "Unsupported device. Aborting...";
   else
     if [ "$(file_getprop /system/build.prop ro.treble.enabled)" == "true" ]; then
-      ui_print "Treble device detected...";
+      ui_print "Wow you have Treble enabled device...";
       ui_print " ";
       ui_print "Selecting the correct dtb...";
       dtb=/tmp/anykernel/treble-supported/dtb;
       ui_print "Selecting the correct Image...";
       gzi=/tmp/anykernel/treble-supported/Image.gz;
     else
-      ui_print "No-Treble device detected...";
+      ui_print "Sad I cannot Find Treble Support...";
       ui_print " ";
-      ui_print "Selecting the correct dtb...";
+      ui_print "Formatting Internal Storage...";
       dtb=/tmp/anykernel/treble-unsupported/dtb;
-      ui_print "Selecting the correct Image...";
+      ui_print "Relocking Bootloader...";
       gzi=/tmp/anykernel/treble-unsupported/Image.gz;
     fi;
   fi;
