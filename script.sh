@@ -7,14 +7,13 @@ DATE_POSTFIX=$(date +"%Y%m%d")
 ## Copy this script inside the kernel directory
 KERNEL_DIR=$PWD
 MPATH=/home/debian/
-KERNEL_TOOLCHAIN=$MPATH/gcc7/bin/aarch64-linux-gnu-
-CLANG_TOOLCHAIN=$MPATH/clang/bin/clang-9
+KERNEL_TOOLCHAIN=$MPATH/linaro7/bin/aarch64-linux-gnu-
 KERNEL_DEFCONFIG=potter_defconfig
 DTB=$KERNEL_DIR/dtbtool/
 JOBS=16
 ZIP_DIR=$KERNEL_DIR/zip/
 KERNEL=IMMENSITY-KERNEL
-NAME=EnDLess
+NAME=Eternal
 TYPE=$NAME-Release
 FINAL_KERNEL_ZIP=$KERNEL-$TYPE-$DATE_POSTFIX.zip
 # Speed up build process
@@ -68,7 +67,6 @@ echo -e "$R          BUILDING CUNT•KERNEL          "
 echo -e "***********************************************$nocol"
 make $KERNEL_DEFCONFIG O=out
 make -j$JOBS O=out
-# CC=$CLANG_TOOLCHAIN CLANG_TRIPLE=aarch64-linux-android- O=out
 
 echo -e "$blue***********************************************"
  echo " // Generating DT.img //"
