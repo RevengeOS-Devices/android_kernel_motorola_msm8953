@@ -8,12 +8,13 @@ DATE_POSTFIX=$(date +"%Y%m%d")
 KERNEL_DIR=$PWD
 MPATH=/home/debian/
 KERNEL_TOOLCHAIN=$MPATH/linaro7/bin/aarch64-linux-gnu-
+TC_ARM=$MPATH/arm/bin/arm-linux-gnueabi-
 KERNEL_DEFCONFIG=potter_defconfig
 DTB=$KERNEL_DIR/dtbtool/
-JOBS=16
+JOBS=20
 ZIP_DIR=$KERNEL_DIR/zip/
 KERNEL=IMMENSITY-KERNEL
-NAME=Eternal
+NAME=EtErnal
 TYPE=$NAME-Release
 FINAL_KERNEL_ZIP=$KERNEL-$TYPE-$DATE_POSTFIX.zip
 # Speed up build process
@@ -34,6 +35,7 @@ nocol='\033[0m'
 
 echo -e  "$P // Setting up Toolchain //"
 export CROSS_COMPILE=$KERNEL_TOOLCHAIN
+export CROSS_COMPILE_ARM32=$TC_ARM
 export ARCH=arm64
 export SUBARCH=arm64
 
