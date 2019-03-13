@@ -1,6 +1,6 @@
 config DTS_EAGLE
 	tristate "DTS Eagle driver"
-	depends on ARM
-	default y if ARM
+	depends on AINUR_DTS_HW
+	default y if AINUR_DTS_HW
 	help
 	  DTS Eagle module.
