@@ -6,16 +6,15 @@ DATE_POSTFIX=$(date +"%Y%m%d")
 
 ## Copy this script inside the kernel directory
 KERNEL_DIR=$PWD
-MPATH=/home/debian/
+MPATH=/home/debian
 KERNEL_TOOLCHAIN=$MPATH/linaro7/bin/aarch64-linux-gnu-
-TC_ARM=$MPATH/arm/bin/arm-linux-gnueabi-
+ARMCC=$MPATH/arm/bin/arm-linux-gnueabi-
 KERNEL_DEFCONFIG=potter_defconfig
 DTB=$KERNEL_DIR/dtbtool/
 JOBS=20
 ZIP_DIR=$KERNEL_DIR/zip/
 KERNEL=IMMENSITY-KERNEL
-NAME=EtErnal
-TYPE=$NAME-Release
+TYPE=AfterLife
 FINAL_KERNEL_ZIP=$KERNEL-$TYPE-$DATE_POSTFIX.zip
 # Speed up build process
 MAKE="./makeparallel"
@@ -35,12 +34,13 @@ nocol='\033[0m'
 
 echo -e  "$P // Setting up Toolchain //"
 export CROSS_COMPILE=$KERNEL_TOOLCHAIN
-export CROSS_COMPILE_ARM32=$TC_ARM
+export CROSS_COMPILE_ARM32=$ARMCC
 export ARCH=arm64
 export SUBARCH=arm64
 
 
-echo -e "$R •••••••••••••••••••••"
+echo -e "$R _____________________"
+echo " "
 echo -e "$yellow        #  I  #"
 echo -e "$yellow        #  M  #"
 echo -e "$yellow        #  M  #"
@@ -50,29 +50,32 @@ echo -e "$yellow        #  S  #"
 echo -e "$yellow 	#  I  #"
 echo -e "$yellow        #  T  #"
 echo -e "$yellow 	#  Y  #"
+echo " "
 echo -e "$nocol        #  |  #"
-echo -e "$nocol        #  |  #"
+echo " "
 echo -e "$yellow        #  K  #"
 echo -e "$yellow        #  E  #"
 echo -e "$yellow        #  R  #"
 echo -e "$yellow        #  N  #"
 echo -e "$yellow        #  E  #"
 echo -e "$yellow        #  L  #"
-echo -e "$R •••••••••••••••••••••"
+echo -e "$R ____________________"
 
-echo -e  "$R // Cleaning up //"
-make clean && make mrproper && rm -rf out/
+echo -e  "$R // Clean up //"
+sudo make clean && sudo make mrproper && rm -rf out/
 
 echo -e "$cyan // defconfig is set to $KERNEL_DEFCONFIG //"
-echo -e "$blue***********************************************"
-echo -e "$R          BUILDING CUNT•KERNEL          "
-echo -e "***********************************************$nocol"
+echo -e "$blue___________________________________________"
+echo -e "$R          BUILDING IMMENSITY•KERNEL          "
+echo -e "________________________________________________$nocol"
+
 make $KERNEL_DEFCONFIG O=out
 make -j$JOBS O=out
 
-echo -e "$blue***********************************************"
+echo -e "$cyan_______________________"
  echo " // Generating DT.img //"
-echo -e "***********************************************$nocol"
+echo -e "____________________________$nocol"
+
 $DTB/dtbToolCM -2 -o $KERNEL_DIR/out/arch/arm64/boot/dtb -s 2048 -p $KERNEL_DIR/out/scripts/dtc/ $KERNEL_DIR/out/arch/arm64/boot/dts/qcom/
 
 echo -e "$R // Verify Image.gz //"
@@ -113,3 +116,6 @@ rm -rf $KERNEL_DIR/out/
 BUILD_END=$(date +"%s")
 DIFF=$(($BUILD_END - $BUILD_START))
 echo -e "$yellow IMMENSITY • KERNEL Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds."
+echo -e $R "Back to HOME Directory"
+
+cd
