@@ -46,6 +46,7 @@
 #include <linux/oom.h>
 #include <linux/prefetch.h>
 #include <linux/printk.h>
+#include <linux/simple_lmk.h>
 
 #include <asm/tlbflush.h>
 #include <asm/div64.h>
@@ -3140,6 +3141,11 @@ static unsigned long balance_pgdat(pg_data_t *pgdat, int order,
 		bool raise_priority = true;
 		bool pgdat_needs_compaction = (order > 0);
 
+#ifdef CONFIG_ANDROID_SIMPLE_LMK
+		if (sc.priority == CONFIG_ANDROID_SIMPLE_LMK_AGGRESSION)
+			simple_lmk_start_reclaim();
+#endif
+
 		sc.nr_reclaimed = 0;
 
 		/*
@@ -3320,6 +3326,9 @@ static void kswapd_try_to_sleep(pg_data_t *pgdat, int order, int classzone_idx)
 
 	/* Try to sleep for a short interval */
 	if (prepare_kswapd_sleep(pgdat, order, remaining, classzone_idx)) {
+#ifdef CONFIG_ANDROID_SIMPLE_LMK
+		simple_lmk_stop_reclaim();
+#endif
 		remaining = schedule_timeout(HZ/10);
 		finish_wait(&pgdat->kswapd_wait, &wait);
 		prepare_to_wait(&pgdat->kswapd_wait, &wait, TASK_INTERRUPTIBLE);
@@ -3330,6 +3339,9 @@ static void kswapd_try_to_sleep(pg_data_t *pgdat, int order, int classzone_idx)
 	 * go fully to sleep until explicitly woken up.
 	 */
 	if (prepare_kswapd_sleep(pgdat, order, remaining, classzone_idx)) {
+#ifdef CONFIG_ANDROID_SIMPLE_LMK
+		simple_lmk_stop_reclaim();
+#endif
 		trace_mm_vmscan_kswapd_sleep(pgdat->node_id);
 
 		/*
