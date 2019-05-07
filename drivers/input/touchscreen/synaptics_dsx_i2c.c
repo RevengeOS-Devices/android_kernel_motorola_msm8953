@@ -133,6 +133,7 @@ static int control_access_block_update_static(
 static int control_access_block_update_dynamic(
 		struct synaptics_rmi4_data *rmi4_data);
 static int synaptics_rmi4_query_device(struct synaptics_rmi4_data *rmi4_data);
+static struct work_struct synaptics_init_work;
 
 /* F12 packet register description */
 static struct {
@@ -7878,6 +7879,18 @@ static struct i2c_driver synaptics_rmi4_driver = {
 	.id_table = synaptics_rmi4_id_table,
 };
 
+
+/**
+ * synaptics_rmi4_initworker()
+ *
+ * Worker for the synaptics_rmi4_init()
+ *
+ */
+static void synaptics_rmi4_initworker(struct work_struct *work)
+{
+	i2c_add_driver(&synaptics_rmi4_driver);
+}
+
  /**
  * synaptics_rmi4_init()
  *
@@ -7889,7 +7902,10 @@ static struct i2c_driver synaptics_rmi4_driver = {
  */
 static int __init synaptics_rmi4_init(void)
 {
-	return i2c_add_driver(&synaptics_rmi4_driver);
+	INIT_WORK(&synaptics_init_work, synaptics_rmi4_initworker);
+	schedule_work(&synaptics_init_work);
+
+	return 0;
 }
 
  /**
