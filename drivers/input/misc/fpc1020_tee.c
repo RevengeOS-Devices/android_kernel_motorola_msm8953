@@ -56,9 +56,9 @@ struct fpc1020_data {
 	int clocks_enabled;
 	int clocks_suspended;
 
-	bool screen_off;
-	int irq_gpio;
-	int rst_gpio;
+	bool __read_mostly screen_off;
+	int __read_mostly irq_gpio;
+	int __read_mostly rst_gpio;
 };
 
 static int vreg_setup(struct fpc1020_data *fpc1020, const char *name,
