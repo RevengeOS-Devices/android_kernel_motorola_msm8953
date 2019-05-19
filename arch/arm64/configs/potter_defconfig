@@ -1232,6 +1232,7 @@ CONFIG_BLK_DEV_RAM_SIZE=8192
 # CONFIG_ATA_OVER_ETH is not set
 # CONFIG_BLK_DEV_RBD is not set
 # CONFIG_BLK_DEV_RSXX is not set
+CONFIG_AIO_SSD_ONLY=y
 
 #
 # Misc devices
