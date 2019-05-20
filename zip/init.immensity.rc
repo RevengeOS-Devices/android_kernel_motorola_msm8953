@@ -1,0 +1,29 @@
+on early-init
+    # Set init and its forked children's oom_adj.
+    write /proc/1/oom_score_adj -1000
+
+on init
+
+    # restricted is for system tasks that are being throttled
+    # due to screen off.
+    chown system system /dev/cpuset/restricted/tasks
+    chmod 0664 /dev/cpuset/restricted/tasks
+    mkdir /dev/cpuset/restricted
+    copy /dev/cpuset/cpus /dev/cpuset/restricted/cpus
+    copy /dev/cpuset/mems /dev/cpuset/restricted/mems
+
+service immensity-post-boot /init.immensity.sh
+    class late_start
+    user root
+    enabled
+    oneshot  
+
+on property:sys.boot_completed=1
+	start immesity-post-boot
+        exec u:r:init:s0 -- /init.immensity.sh
+        exec u:r:su:s0 root root -- /init.immensity.sh
+	exec u:r:magisk:s0 root root -- /init.immensity.sh
+
+        setprop ro.vendor.qti.config.zram true
+	write /proc/sys/vm/page-cluster 0
+        write /sys/devices/system/cpu/cpufreq/policy0/scaling_governor "interactive"
