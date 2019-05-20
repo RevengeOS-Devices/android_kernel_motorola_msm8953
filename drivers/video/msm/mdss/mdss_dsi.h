@@ -23,6 +23,7 @@
 #include "mdss_panel.h"
 #include "mdss_dsi_cmd.h"
 #include "mdss_dsi_clk.h"
+#include <linux/pm_qos.h>
 
 #define MMSS_SERDES_BASE_PHY 0x04f01000 /* mmss (De)Serializer CFG */
 
@@ -436,6 +437,7 @@ struct mdss_dsi_ctrl_pdata {
 	struct clk *byte_clk_rcg;
 	struct clk *pixel_clk_rcg;
 	struct clk *vco_dummy_clk;
+	struct pm_qos_request pm_qos_req;
 	u8 ctrl_state;
 	int panel_mode;
 	int irq_cnt;
