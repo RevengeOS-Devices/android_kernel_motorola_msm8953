@@ -25,6 +25,7 @@ done;
 
 # Set Max-Frequency
 echo 2016000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+echo 652800 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
 
 # Disable slice_idle on supported block devices
 for block in mmcblk0 mmcblk1 dm-0 dm-1 sda; do
