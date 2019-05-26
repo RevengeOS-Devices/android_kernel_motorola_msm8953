@@ -22,10 +22,10 @@ KERNEL_DEFCONFIG=potter_defconfig
 DTB=$KERNEL_DIR/dtbtool/
 ZIP_DIR=$KERNEL_DIR/zip/
 KERNEL=IMMENSITY-KERNEL
-TYPE=CAF
-RELEASE=LA.UM.7.6.r1-04800
+TYPE=STABLE
+RELEASE=HMP
 FINAL_KERNEL_ZIP=$KERNEL-$RELEASE-$TYPE-$DATE_POSTFIX.zip
-JOBS=8
+JOBS=20
 
 ############################################################################################################################################################
 # Speed up build process																   #
@@ -86,7 +86,7 @@ echo -e "$cyan ______________________"
 ############################################################################################################################################################
 
 echo -e  "$purple // - Cleaning up - //"
-sudo make clean && sudo make mrproper && rm -rf out/ && git clean -f
+sudo make clean && sudo make mrproper
 
 ############################################################################################################################################################
 
@@ -102,8 +102,7 @@ echo -e "________________________________________________$nocol"
 export ARCH=arm64
 export CC=/home/revenger/clang/bin/clang-9
 make $KERNEL_DEFCONFIG O=out
-make 		CROSS_COMPILE_ARM32=/home/revenger/arm32/bin/arm-linux-gnueabi- \
-		CLANG_TRIPLE=aarch64-linux-android- \
+make 		CLANG_TRIPLE=aarch64-linux-android- \
 		CROSS_COMPILE=$KERNEL_TOOLCHAIN \
 		-j$JOBS \
 		O=out

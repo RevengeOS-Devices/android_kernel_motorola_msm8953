@@ -12,8 +12,8 @@ for i in /sys/block/*/queue; do
   echo 0 > $i/add_random;
   echo 0 > $i/iostats;
   echo 0 > $i/nomerges;
-  echo 128 > $i/nr_requests;
-  echo 256 > $i/read_ahead_kb;
+  echo 96 > $i/nr_requests;
+  echo 128 > $i/read_ahead_kb;
   echo 0 > $i/rotational;
   echo 1 > $i/rq_affinity;
 done;
