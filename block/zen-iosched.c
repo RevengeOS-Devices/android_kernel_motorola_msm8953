@@ -159,7 +159,7 @@ static int zen_dispatch_requests(struct request_queue *q, int force)
 
 static int zen_init_queue(struct request_queue *q, struct elevator_type *e)
 {
-	struct zen_data *zdata;
+	struct zen_data *zdata = 0;
     struct elevator_queue *eq;
     eq = elevator_alloc(q, e);
     if (!eq){
