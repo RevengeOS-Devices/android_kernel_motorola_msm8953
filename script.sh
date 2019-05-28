@@ -17,6 +17,7 @@ DATE_POSTFIX=$(date +"%Y%m%d")
 KERNEL_DIR=${PWD}
 HOMEPATH=/home/revenger
 KERNEL_TOOLCHAIN=${HOMEPATH}/gcc/bin/aarch64-linux-android-
+ARM32_TOOLCHAIN=${HOMEPATH}/arm/bin/arm-linux-androideabi-
 CLANG_PATH=${HOMEPATH}/clang/bin
 KERNEL_DEFCONFIG=potter_defconfig
 DTB=${KERNEL_DIR}/dtbtool/
@@ -107,6 +108,7 @@ make ${KERNEL_DEFCONFIG} O=out
 make 		CLANG_TRIPLE=aarch64-linux-android- \
 		CC=clang \
 		CROSS_COMPILE=${KERNEL_TOOLCHAIN} \
+		CROSS_COMPILE_ARM32=${ARM32_TOOLCHAIN} \
 		-j${JOBS} \
 		O=out
 ############################################################################################################################################################
