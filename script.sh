@@ -14,18 +14,18 @@ DATE_POSTFIX=$(date +"%Y%m%d")
 ## kernel dependencies																	   #
 ############################################################################################################################################################
 
-KERNEL_DIR=$PWD
+KERNEL_DIR=${PWD}
 HOMEPATH=/home/revenger
-KERNEL_TOOLCHAIN=$HOMEPATH/gcc/bin/aarch64-linux-android-
-CLANG_TOOLCHAIN=$HOMEPATH/clang/bin/clang-9
+KERNEL_TOOLCHAIN=${HOMEPATH}/gcc/bin/aarch64-linux-android-
+CLANG_PATH=${HOMEPATH}/clang/bin
 KERNEL_DEFCONFIG=potter_defconfig
-DTB=$KERNEL_DIR/dtbtool/
-ZIP_DIR=$KERNEL_DIR/zip/
+DTB=${KERNEL_DIR}/dtbtool/
+ZIP_DIR=${KERNEL_DIR}/zip/
 KERNEL=IMMENSITY-KERNEL
 TYPE=STABLE
 RELEASE=HMP
-FINAL_KERNEL_ZIP=$KERNEL-$RELEASE-$TYPE-$DATE_POSTFIX.zip
-JOBS=20
+FINAL_KERNEL_ZIP=${KERNEL}-${RELEASE}-${TYPE}-${DATE_POSTFIX}.zip
+JOBS=16
 
 ############################################################################################################################################################
 # Speed up build process																   #
@@ -39,11 +39,11 @@ echo "INITIALIZE ALL THE DIRECTORIES"
 # Create Necessary zip Folder                                                                                                                               #
 ############################################################################################################################################################
 
-cd $HOMEPATH
+cd ${HOMEPATH}
 rm -rf IMMEN*
-cd $ZIP_DIR
+cd ${ZIP_DIR}
 mkdir treble-unsupported
-cd $KERNEL_DIR
+cd ${KERNEL_DIR}
 
 ############################################################################################################################################################
 # Initialize Build                                                                                                                                         #
@@ -98,13 +98,16 @@ echo -e "________________________________________________$nocol"
 ############################################################################################################################################################
 # Start Compiling 	                                                                                                                                   #
 ############################################################################################################################################################
-
+export KBUILD_BUILD_USER=UtsavTheCunt
+export KBUILD_BUILD_HOST=Cunts-Space
 export ARCH=arm64
-export CC=/home/revenger/clang/bin/clang-9
-make $KERNEL_DEFCONFIG O=out
+export PATH=${CLANG_PATH}:${PATH}
+export CLANG_TRIPLE=aarch64-linux-android-
+make ${KERNEL_DEFCONFIG} O=out
 make 		CLANG_TRIPLE=aarch64-linux-android- \
-		CROSS_COMPILE=$KERNEL_TOOLCHAIN \
-		-j$JOBS \
+		CC=clang \
+		CROSS_COMPILE=${KERNEL_TOOLCHAIN} \
+		-j${JOBS} \
 		O=out
 ############################################################################################################################################################
 # Generate DTB		                                                                                                                                   #
@@ -114,65 +117,65 @@ echo -e "$cyan_________________________"
  echo " // - Generating DT.img - //"
 echo -e "______________________________$nocol"
 
-$DTB/dtbToolCM -2 -o $KERNEL_DIR/out/arch/arm64/boot/dtb -s 2048 -p $KERNEL_DIR/out/scripts/dtc/ $KERNEL_DIR/out/arch/arm64/boot/dts/qcom/
+${DTB}/dtbToolCM -2 -o ${KERNEL_DIR}/out/arch/arm64/boot/dtb -s 2048 -p ${KERNEL_DIR}/out/scripts/dtc/ ${KERNEL_DIR}/out/arch/arm64/boot/dts/qcom/
 
 ############################################################################################################################################################
 # Verify all the Necessary Stuff                                                                                                                           #
 ############################################################################################################################################################
 
 echo -e "$yellow // - Verify Image.gz - //"
-ls $KERNEL_DIR/out/arch/arm64/boot/Image.gz
+ls ${KERNEL_DIR}/out/arch/arm64/boot/Image.gz
 
 echo -e "$yellow // - Verify dtb - //"
-ls $KERNEL_DIR/out/arch/arm64/boot/dtb
+ls ${KERNEL_DIR}/out/arch/arm64/boot/dtb
 
 echo -e "$yellow // - Verifying zip Directory - //"
-ls $ZIP_DIR/
+ls ${ZIP_DIR}/
 
 ############################################################################################################################################################
 # CLean Up Zip DIR		                                                                                                                                   #
 ############################################################################################################################################################
 
 echo -e "$yellow // - Removing leftovers - //"
-rm -rf $ZIP_DIR/Image.gz
-rm -rf $ZIP_DIR/$FINAL_KERNEL_ZIP
-rm -rf $ZIP_DIR/dtb
+rm -rf ${ZIP_DIR}/Image.gz
+rm -rf ${ZIP_DIR}/{$FINAL_KERNEL_ZIP}
+rm -rf ${ZIP_DIR}/dtb
 
 ############################################################################################################################################################
 
 echo -e "$yellow // - Copying Image.gz - //"
-cp $KERNEL_DIR/out/arch/arm64/boot/Image.gz $ZIP_DIR/treble-unsupported/
+cp ${KERNEL_DIR}/out/arch/arm64/boot/Image.gz ${ZIP_DIR}/treble-unsupported/
 ############################################################################################################################################################
 
 echo -e "$yellow // - Copying dtb - //"
-cp $KERNEL_DIR/out/arch/arm64/boot/dtb $ZIP_DIR/treble-unsupported/
+cp ${KERNEL_DIR}/out/arch/arm64/boot/dtb ${ZIP_DIR}/treble-unsupported/
 
 ############################################################################################################################################################
 echo -e "$yellow // - Time to zip everything up! - //"
 if [ -e out/arch/arm64/boot/Image.gz ]; then
-cd $ZIP_DIR
-zip -r9 $FINAL_KERNEL_ZIP * -x README $FINAL_KERNEL_ZIP
-cp $KERNEL_DIR/zip/$FINAL_KERNEL_ZIP $HOMEPATH/$FINAL_KERNEL_ZIP
+cd ${ZIP_DIR}
+zip -r9 ${FINAL_KERNEL_ZIP} * -x README ${FINAL_KERNEL_ZIP}
+cp ${KERNEL_DIR}/zip/${FINAL_KERNEL_ZIP} ${HOMEPATH}/${FINAL_KERNEL_ZIP}
 else
-echo 'No boot image!'
+echo "No boot image!"
 fi
 ############################################################################################################################################################
 echo -e "$yellow // - Build Successfull - //"
-cd $KERNEL_DIR
+cd ${KERNEL_DIR}
 ############################################################################################################################################################
 # Clean up Everything																	   #
 ############################################################################################################################################################
 echo -e "$yellow // - Cleaning up - //$nocol"                                                                                                              #
-rm -rf $ZIP_DIR/$FINAL_KERNEL_ZIP															   #
-rm -rf $ZIP_DIR/Image.gz																   #
-rm -rf $ZIP_DIR/dtb																	   #
-rm -rf $ZIP_DIR/treble-unsupported															   #
-rm -rf $KERNEL_DIR/out/																	   #
+rm -rf ${ZIP_DIR}/${FINAL_KERNEL_ZIP}															   #
+rm -rf ${ZIP_DIR}/Image.gz																   #
+rm -rf ${ZIP_DIR}/dtb																	   #
+rm -rf ${ZIP_DIR}/treble-unsupported															   #
+rm -rf ${KERNEL_DIR}/out/																	   #
 																			   #
 ############################################################################################################################################################
 # Build Status																		   #
 ############################################################################################################################################################
 BUILD_END=$(date +"%s")
-DIFF=$(($BUILD_END - $BUILD_START))
+DIFF=$((${BUILD_END} - ${BUILD_START}))
 echo -e "$yellow IMMENSITY • KERNEL Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds."
 ############################################################################################################################################################
