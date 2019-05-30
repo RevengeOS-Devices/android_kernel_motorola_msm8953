@@ -571,7 +571,9 @@
 			qcom,thermal-handle = <&msm_thermal_freq>;
 		};
 	};
-
+	qcom,bcl {
+		/delete-property/ qcom,bcl-soc-hotplug-list;
+	};
 	qcom,msm-core@a0000 {
 		compatible = "qcom,apss-core-ea";
 		reg = <0xa0000 0x1000>;
