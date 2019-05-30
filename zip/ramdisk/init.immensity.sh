@@ -23,7 +23,7 @@ for i in $(find /sys/class/net -type l); do
   echo 128 > $i/tx_queue_len;
 done;
 
-# Set Max-Frequency
+# Set Min-Max-Frequency
 echo 2016000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
 echo 652800 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
 
@@ -34,6 +34,13 @@ done;
 
 # configure governor settings for little cluster
 echo "interactive" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+echo "19000 1401600:39000" /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
+echo 85 /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
+echo 2000 /sys/devices/system/cpu/cpufreq/interactive/timer_rate
+echo 1401600 /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
+echo 0 /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
+echo "85 1401600:80" /sys/devices/system/cpu/cpufreq/interactive/target_loads
+echo 39000 /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
 
     # Memory management.  Basic kernel parameters, and allow the high
     # level system server to be able to adjust the kernel OOM driver
@@ -56,9 +63,9 @@ echo 128 > /sys/block/mmcblk1/queue/read_ahead_kb
 echo "0" > /proc/sys/fs/dir-notify-enable
 echo "30" > /proc/sys/fs/lease-break-time
 
-# Marginally reduce suspend latency
-echo "1" > /sys/module/printk/parameters/console_suspend
-
+# disable core_ctl
+echo 0 /sys/module/msm_thermal/core_control/enabled
+echo N /sys/module/msm_thermal/parameters/enabled
 
 }
 
