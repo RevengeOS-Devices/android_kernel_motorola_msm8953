@@ -15,9 +15,9 @@ DATE_POSTFIX=$(date +"%Y%m%d")
 ############################################################################################################################################################
 
 KERNEL_DIR=${PWD}
-HOMEPATH=/home/revenger
-KERNEL_TOOLCHAIN=${HOMEPATH}/gcc/bin/aarch64-linux-android-
-ARM32_TOOLCHAIN=${HOMEPATH}/arm/bin/arm-linux-androideabi-
+HOMEPATH=/home/utsavbalar1231
+KERNEL_TOOLCHAIN=${HOMEPATH}/gcc9/bin/aarch64-linux-gnu-
+ARM32_TOOLCHAIN=${HOMEPATH}/arm32/bin/arm-linux-androideabi-
 CLANG_PATH=${HOMEPATH}/clang/bin
 KERNEL_DEFCONFIG=potter_defconfig
 DTB=${KERNEL_DIR}/dtbtool/
@@ -103,9 +103,9 @@ export KBUILD_BUILD_USER=UtsavTheCunt
 export KBUILD_BUILD_HOST=Cunts-Space
 export ARCH=arm64
 export PATH=${CLANG_PATH}:${PATH}
-export CLANG_TRIPLE=aarch64-linux-android-
+export CLANG_TRIPLE=aarch64-linux-gnu-
 make ${KERNEL_DEFCONFIG} O=out
-make 		CLANG_TRIPLE=aarch64-linux-android- \
+make 		CLANG_TRIPLE=aarch64-linux-gnu- \
 		CC=clang \
 		CROSS_COMPILE=${KERNEL_TOOLCHAIN} \
 		CROSS_COMPILE_ARM32=${ARM32_TOOLCHAIN} \
