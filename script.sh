@@ -16,8 +16,6 @@ DATE_POSTFIX=$(date +"%Y%m%d")
 
 KERNEL_DIR=$PWD
 HOMEPATH=/home/ubuntu2
-KERNEL_TOOLCHAIN=~/gcc/bin/aarch64-linux-android-
-CLANG_TOOLCHAIN=~/clang/bin/clang-9
 KERNEL_DEFCONFIG=potter_defconfig
 DTB=$KERNEL_DIR/dtbtool/
 ZIP_DIR=$KERNEL_DIR/zip/
@@ -102,11 +100,8 @@ echo -e "________________________________________________$nocol"
 export KBUILD_BUILD_USER=UtsavTheCunt
 export KBUILD_BUILD_HOST=Cunts-Space
 export ARCH=arm64
-export  CC=~/clang/bin/clang-9
-export CLANG_TRIPLE=aarch64-linux-android-
-export CROSS_COMPILE=~/gcc/bin/aarch64-linux-android-
 make $KERNEL_DEFCONFIG O=out
-make  CC=~/clang/bin/clang-9 CLANG_TRIPLE=aarch64-linux-android- CROSS_COMPILE=~/gcc/bin/aarch64-linux-android-  -j$JOBS O=out
+make  CROSS_COMPILE=~/gcc-9/bin/aarch64-elf-  -j$JOBS O=out
 ############################################################################################################################################################
 # Generate DTB		                                                                                                                                   #
 ############################################################################################################################################################
