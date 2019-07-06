@@ -290,7 +290,7 @@ static void scsi_strcpy_devinfo(char *name, char *to, size_t to_length,
 	size_t from_length;
 
 	from_length = strlen(from);
-	strncpy(to, from, min(to_length, from_length));
+	memcpy(to, from, min(to_length, from_length));
 	if (from_length < to_length) {
 		if (compatible) {
 			/*
@@ -298,10 +298,10 @@ static void scsi_strcpy_devinfo(char *name, char *to, size_t to_length,
 			 */
 			to[from_length] = '\0';
 		} else {
-			/* 
-			 * space pad the string if it is short. 
+			/*
+			 * space pad the string if it is short.
 			 */
-			strncpy(&to[from_length], spaces,
+			memcpy(&to[from_length], spaces,
 				to_length - from_length);
 		}
 	}
